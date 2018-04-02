@@ -11,5 +11,6 @@ LazyData: true
 Suggests: testthat
 Imports: stringr,
     magrittr,
-    purrr
+    purrr,
+    lubridate
 RoxygenNote: 6.0.1

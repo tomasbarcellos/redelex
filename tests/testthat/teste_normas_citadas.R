@@ -11,7 +11,7 @@ Art. 2º A suspensão de que trata o art. 1º não se aplica às partidas com li
 Art. 3º Esta Instrução Normativa entra em vigor na data de sua publicação.'
 
 test_that('Regex funciona', {
-  expect_equal(extrair_normas(string_teste),
+  expect_equal(normas_citadas(string_teste),
                c('lei nº 10.520, de 17 de julho de 2002',
                  'lei nº 10, de 17 de julho de 2002',
                  'decreto-lei nº 8.666, de 21 de junho de 1993',
@@ -19,3 +19,16 @@ test_that('Regex funciona', {
                  'decreto nº 24.114, de 12 de abril de 1934',
                  'instrução normativa nº 17, de 13 de julho de 2006'))
 })
+
+path_in01 <- system.file('extdata', 'in01.txt', package = 'redeleg')
+in01 <- readLines(path_in01, encoding = 'UTF-8', warn = FALSE)
+
+test_that('Pega todas as normas citadas na IN 01 MP/CGU', {
+  expect_equal(normas_citadas(in01),
+               c("decreto nº 8.578, de 26 de novembro de 2015",
+                 "decreto nº 8.109, de 17 de setembro de 2013"))
+  # Nome da norma não aparece como norma citada
+  nome_in01 <- "instrução normativa conjunta mp/cgu nº 01, de 10 de maio de 2016"
+  expect_false(nome_in01 %in% normas_citadas(in01))
+})
+

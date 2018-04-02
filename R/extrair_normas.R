@@ -53,7 +53,7 @@ eliminar_quebras <- function(texto) {
 #' @export
 #'
 #' @examples
-extrair_normas <- function(texto) {
+normas_citadas <- function(texto) {
   lista_de_tipos <- c('lei', 'decreto', 'resolução',
                       'instrução normativa', 'portaria', 'ato',
                       'medida provisória', 'emenda constitucional')
@@ -62,14 +62,11 @@ extrair_normas <- function(texto) {
   # Aplicar alguns regex no texto
   padroes <- paste0('(?<!-)',
     lista_de_tipos,
-    '.{0,10} nº ?\\d{1,3}(\\.?\\d{3})?(\\/\\d{2,4})?(, ?de \\d{1,2}º? de .+? de \\d{4})?'
+    '.{0,20} nº ?\\d{1,3}(\\.?\\d{3})?(\\/\\d{2,4})?(, ?de \\d{1,2}º? de .+? de \\d{4})?'
   )
 
-  # Garantir que não pegue 2 vezes decreto-lei
-  # como decreto-lei e como lei
-
   texto_limpo <- texto %>% limpar_texto() %>%
-    stringr::str_c(collapse = ' ') %>%
+    stringr::str_c(collapse = '\n') %>%
     stringr::str_to_lower() %>%
     stringr::str_replace_all('\\(.+?\\)', '')
 
@@ -77,9 +74,10 @@ extrair_normas <- function(texto) {
     padroes, ~stringr::str_extract_all(texto_limpo, .x)[[1]]
   ) %>% unlist()
 
-  resp
+  nome <- pegar_nome(texto_limpo)
 
   # E esperamos um vetor com as normas citadas
+  resp[resp != nome]
 }
 
 #' Title
@@ -110,16 +108,20 @@ pegar_nome <- function(texto){
 #'
 #' @examples
 criar_urn <- function(nome_de_norma) {
+  local <- ifelse(Sys.info()['sysname'] == 'Windows',
+                  'Portuguese_Brazil.1252', 'pt_BR.utf8')
+
   tipo <- stringr::str_extract(nome_de_norma, '.{1,40}(?= ?nº)') %>%
     stringr::str_trim()
   numero <- stringr::str_extract(nome_de_norma, '\\d{1,3}(\\.\\d{3})*') %>%
     stringr::str_remove_all('\\.')
   dia <- nome_de_norma %>%
     stringr::str_extract('\\d{1,2}º? de .{4,9} de \\d{4}') %>%
-    stringr::str_replace('º', '') %>% as.Date(format = '%d de %B de %Y')
+    stringr::str_replace('º', '') %>%
+    lubridate::dmy(locale = local)
+
   if (is.na(dia)) {
-    dia <- nome_de_norma %>%
-      stringr::str_extract('\\d{4}')
+    dia <- stringr::str_extract(nome_de_norma, '\\d{4}')
     if (is.na(dia)) {
       dia <- '*'
     }
