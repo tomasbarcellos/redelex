@@ -1,6 +1,6 @@
 Package: redelex
 Title: Definir Relacionamento Entre Normas Legais
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: person("Tomás", "Barcellos", email = "tomas.barcellos@agricultura.govr.br", role = c("aut", "cre"))
 Description: Este pacote reune funções que permitem acessar textos legais
   e extrair seu relacionamento com outros textos legais.
