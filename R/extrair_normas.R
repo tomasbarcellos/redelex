@@ -16,27 +16,33 @@ normas_citadas <- function(texto, contemnome = TRUE) {
 
   # Aplicar alguns regex no texto
   padroes <- paste0('(?<!-)', lista_de_tipos,
-                    '.{0,20} n\\u00ba ?\\\\d{1,3}(\\\\.?\\\\d{3})?',
+                    '.{0,20} n\\u00ba ?\\\\d{1,3}(\\\\.? ?\\\\d{3})?',
                     '(\\\\/\\\\d{2,4})?',
                     '(, ?de \\\\d{1,2}\\u00ba? de .+? de \\\\d{4})?') %>%
     stringi::stri_unescape_unicode()
 
-  texto_limpo <- texto %>% limpar_texto() %>%
+  texto_limpo <- texto %>%
+    limpar_texto() %>%
     stringr::str_c(collapse = '\n') %>%
     stringr::str_to_lower() %>%
     stringr::str_replace_all('\\(.+?\\)', '')
 
   mat_ordem <- stringr::str_locate_all(texto_limpo, padroes) %>%
     do.call(what = 'rbind')
-  mat_ordem <- mat_ordem[order(mat_ordem[, 1]), ]
+
+  mat_ordem <- mat_ordem[order(mat_ordem[, 1]), , drop = FALSE]
 
   resp <- stringr::str_sub(texto_limpo, mat_ordem)
 
   if (contemnome) {
     resp <- resp[-1]
   }
+  if (length(resp) == 0) {
+    warning("Nenhuma norma encontrada no corpo deste texto",
+            call. = FALSE)
+  }
 
-  resp
+  resp %>% stringr::str_replace("\\.\\s+", ".")
 }
 
 #' Nome da norma
@@ -50,7 +56,9 @@ normas_citadas <- function(texto, contemnome = TRUE) {
 #' texto <- texto_norma(as_urn("urn:lex:br:federal:lei:2011-11-18;12527"))
 #' nome_norma(texto)
 nome_norma <- function(texto){
-  citadas <- normas_citadas(texto, contemnome = FALSE)
+  citadas <- texto %>%
+
+    normas_citadas(contemnome = FALSE)
   citadas[[1]]
 }
 
@@ -72,7 +80,7 @@ criar_urn <- function(nome_de_norma, nivel = 'federal') {
   nome_de_norma <- stringi::stri_unescape_unicode(nome_de_norma) %>%
     stringr::str_to_lower()
 
-  tipo <- stringr::str_extract(nome_de_norma, '.{1,40}(?= ?n\\u00ba)') %>%
+  tipo <- stringr::str_extract(nome_de_norma, '^.{3,40}(?= ?n\\u00ba)') %>%
     stringr::str_trim()
   numero <- stringr::str_extract(nome_de_norma, '\\d{1,3}(\\.\\d{3})*') %>%
     stringr::str_remove_all('\\.')
@@ -141,11 +149,29 @@ texto_norma.urn <- function(nome, fonte = c("senado", "planalto", "camara")) {
 texto_norma.url <- function(nome, fonte = c("senado", "planalto", "camara")) {
   fonte <- match.arg(fonte, c("senado", "planalto", "camara"))
   if (fonte == "senado") {
-    texto <- xml2::read_html(nome) %>%
-      rvest::html_nodes("#conteudoPrincipal > div") %>%
-      rvest::html_nodes("div") %>%
-      rvest::html_nodes("p") %>%
-      rvest::html_text()
+    pagina <- xml2::read_html(nome)
+    alerta <- pagina %>% rvest::html_nodes(".alert-danger")
+    if (length(alerta) == 0) {
+      publicacoes <- rvest::html_nodes(pagina, '.table-bordered') %>%
+        rvest::html_children()
+      textos <- publicacoes %>% rvest::html_text() %>%
+        stringr::str_replace_all('\\s+', " ")
+      original <- stringr::str_which(textos, "PUB")
+
+      links <- publicacoes %>% rvest::html_nodes('a') %>%
+        rvest::html_attr("onclick")
+      final <- stringr::str_extract(links[original], "(?<=showPagina\\(').+(?=')")
+      base_senado <- "http://legis.senado.leg.br"
+      nova_url <- paste0(base_senado, final)
+      return(texto_norma.url(nova_url, fonte))
+    } else {
+      texto <- pagina %>%
+        rvest::html_nodes("#conteudoPrincipal > div") %>%
+        rvest::html_nodes("div") %>%
+        rvest::html_nodes("p") %>%
+        rvest::html_text()
+    }
+
   } else {
     stop("M\\u00e9todo n\\u00e3o criado para esta fonte", call. = FALSE)
   }

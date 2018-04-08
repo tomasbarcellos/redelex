@@ -64,6 +64,19 @@ as_urn <- function(string) {
   string
 }
 
+escapar_unicode <- function(texto) {
+  # se o texto for escapado, nada
+  if (any(is_escapado(texto))) {
+    texto
+  } else { # ou escape
+    stringi::stri_escape_unicode(texto)
+  }
+}
+
+is_escapado <- function(texto) {
+  stringr::str_detect(texto, "\\\\u\\w{4,6}")
+}
+
 #' @export
 print.urn <- function(x, ...) {
   tamanho <- length(x)

@@ -36,3 +36,13 @@ test_that('Pega todas as normas citadas na IN 01 MP/CGU', {
   expect_false(stringi::stri_unescape_unicode(nome_in01) %in% normas_citadas(in01))
 })
 
+test_that("O tamanho de nenhuma norma citada excede 80", {
+  expect_true( all(nchar(normas_citadas(in01)) <= 80) )
+  expect_warning(
+    (citadas_11326 <- "lei nº 11.326, de 24 de julho de 2006" %>%
+      texto_norma() %>% normas_citadas() ),
+    "Nenhuma"
+    )
+  expect_true( all(nchar(citadas_11326) <= 80) )
+})
+
