@@ -58,7 +58,7 @@ eliminar_quebras <- function(texto) {
 #' @export
 #'
 #' @examples
-#' as_urn("urn:lex:br:federal:lei:2011-11-18;12527")
+#' # as_urn("urn:lex:br:federal:lei:2011-11-18;12527")
 as_urn <- function(string) {
   class(string) <- c('urn', class(string))
   string

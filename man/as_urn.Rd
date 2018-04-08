@@ -16,5 +16,5 @@ O mesmo texto como URN
 Converter em URN
 }
 \examples{
-as_urn("urn:lex:br:federal:lei:2011-11-18;12527")
+# as_urn("urn:lex:br:federal:lei:2011-11-18;12527")
 }

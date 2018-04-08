@@ -7,8 +7,8 @@
 #' @export
 #'
 #' @examples
-#' texto <- texto_norma("Lei n\\u00ba 12.527, de 18 de novembro de 2011")
-#' normas_citadas(texto)
+#' # texto <- texto_norma("Lei n\\u00ba 12.527, de 18 de novembro de 2011")
+#' # normas_citadas(texto)
 normas_citadas <- function(texto, contemnome = TRUE) {
   lista_de_tipos <- c("lei", "decreto", "resolu\\u00e7\\u00e3o",
                       "instru\\u00e7\\u00e3o normativa", 'portaria', 'ato',
@@ -47,8 +47,8 @@ normas_citadas <- function(texto, contemnome = TRUE) {
 #' @export
 #'
 #' @examples
-#' texto <- texto_norma("Lei n\\u00ba 12.527, de 18 de novembro de 2011")
-#' nome_norma(texto)
+#' # texto <- texto_norma(as_urn("urn:lex:br:federal:lei:2011-11-18;12527"))
+#' # nome_norma(texto)
 nome_norma <- function(texto){
   citadas <- normas_citadas(texto, contemnome = FALSE)
   citadas[[1]]
@@ -64,7 +64,7 @@ nome_norma <- function(texto){
 #' @export
 #'
 #' @examples
-#' criar_urn("Lei n\\u00ba 12.527, de 18 de novembro de 2011")
+#' # criar_urn("Lei n\\u00ba 12.527, de 18 de novembro de 2011")
 criar_urn <- function(nome_de_norma, nivel = 'federal') {
   local <- ifelse(Sys.info()['sysname'] == 'Windows',
                   'Portuguese_Brazil.1252', 'pt_BR.utf8')
@@ -102,7 +102,6 @@ criar_urn <- function(nome_de_norma, nivel = 'federal') {
 #'
 #' @return O texto da norma
 #' @export
-#'
 texto_norma <- function(nome, fonte) {
   UseMethod('texto_norma', nome)
 }
