@@ -22,8 +22,8 @@ test_that('Regex funciona', {
                  'decreto nº 24.114, de 12 de abril de 1934'))
 })
 
-# path_in01 <- system.file('extdata', 'in01.txt', package = 'redeleg')
-path_in01 <- '../../inst/extdata/in01.txt'
+path_in01 <- system.file('extdata', 'in01.txt', package = 'redelex')
+# path_in01 <- '../../inst/extdata/in01.txt'
 in01 <- readLines(path_in01, encoding = 'UTF-8', warn = FALSE)
 nome_in01 <- "instru\\u00e7\\u00e3o normativa conjunta mp/cgu n\\u00ba 01, de 10 de maio de 2016"
 
