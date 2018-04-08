@@ -10,7 +10,7 @@ r:
   - devel
 
 before_install:
-  - Rscript -e 'devtools::install_deps()'
+  - Rscript -e 'install.packages("devtools"); devtools::install_deps()'
 
 after_success:
   - Rscript -e 'covr::codecov()'
