@@ -1,4 +1,4 @@
-Package: redeleg
+Package: redelex
 Title: Definir Relacionamento Entre Normas Legais
 Version: 0.0.0.9000
 Authors@R: person("Tomás", "Barcellos", email = "tomas.barcellos@agricultura.govr.br", role = c("aut", "cre"))

@@ -1,8 +1,8 @@
-# redeleg
+# redelex
 
-[![Travis-CI Build Status](https://travis-ci.org/tomasbarcellos/redeleg.svg?branch=master)](https://travis-ci.org/tomasbarcellos/redeleg)
+[![Travis-CI Build Status](https://travis-ci.org/tomasbarcellos/redelex.svg?branch=master)](https://travis-ci.org/tomasbarcellos/redelex)
 
-[![Coverage Status](https://img.shields.io/codecov/c/github/tomasbarcellos/redeleg/master.svg)](https://codecov.io/github/tomasbarcellos/redeleg?branch=master)
+[![Coverage Status](https://img.shields.io/codecov/c/github/tomasbarcellos/redelex/master.svg)](https://codecov.io/github/tomasbarcellos/redelex?branch=master)
 
 O objetivo do pacote redeleg é oferecer uma série de funções que permitam identificar
 o relacionamento entre textos legais.
@@ -11,13 +11,13 @@ o relacionamento entre textos legais.
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("tomasbarcellos/redeleg")
+devtools::install_github("tomasbarcellos/redelex")
 ```
 
 ## Exemplo
 
 ``` r
-library(redeleg)
+library(redelex)
 
 # urn da lei de acesso a informação
 urn_12527 <- as_urn("urn:lex:br:federal:lei:2011-11-18;12527")
