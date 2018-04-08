@@ -1,16 +1,20 @@
 Package: redeleg
-Title: What the Package Does (one line, title case)
+Title: Definir Relacionamento Entre Normas Legais
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-Depends: R (>= 3.3),
-    magrittr
-License: What license is it under?
+Authors@R: person("Tomás", "Barcellos", email = "tomas.barcellos@agricultura.govr.br", role = c("aut", "cre"))
+Description: Este pacote reune funções que permitem acessar textos legais
+  e extrair seu relacionamento com outros textos legais.
+Depends: R (>= 3.3)
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
-Suggests: testthat
+Suggests: testthat,
+    covr
 Imports: stringr,
     magrittr,
     purrr,
-    lubridate
+    lubridate,
+    rvest,
+    xml2,
+    stringi
 RoxygenNote: 6.0.1
