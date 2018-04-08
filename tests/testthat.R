@@ -1,4 +1,4 @@
 library(testthat)
-library(redeleg)
+library(redelex)
 
-test_check("redeleg")
+test_check("redelex")
