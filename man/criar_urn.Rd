@@ -19,5 +19,5 @@ URN da norma, no padr\\u00e3o adotado pelo LEXML
 Criar URN
 }
 \examples{
-# criar_urn("Lei n\\\\u00ba 12.527, de 18 de novembro de 2011")
+criar_urn("Lei n\\\\u00ba 12.527, de 18 de novembro de 2011")
 }

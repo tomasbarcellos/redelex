@@ -63,3 +63,27 @@ as_urn <- function(string) {
   class(string) <- c('urn', class(string))
   string
 }
+
+#' @export
+print.urn <- function(x, ...) {
+  tamanho <- length(x)
+  cat('<urn> ')
+  msg <- ifelse(tamanho == 1, "1 urn",
+                paste0(tamanho, " urns:",
+                      ifelse(tamanho > 10," mostrando as 10 primeiras", "")
+                      )
+                )
+  cat(msg, '\n')
+  print(head(as.character(x), 10))
+}
+
+#' @export
+summary.urn <- function(x, ...) {
+  tamanho <- length(x)
+  unicas <- length(unique(x))
+  msg <- c(tamanho, unicas)
+  nomes <- c("Tamanho", "URNs \\u00fanicas")
+  names(msg) <- stringi::stri_unescape_unicode(nomes)
+  print(msg)
+}
+

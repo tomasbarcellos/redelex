@@ -18,6 +18,6 @@ Um vetor com o nome das normas citadas
 Extrair normas citadas
 }
 \examples{
-# texto <- texto_norma("Lei n\\\\u00ba 12.527, de 18 de novembro de 2011")
-# normas_citadas(texto)
+texto <- texto_norma("Lei n\\\\u00ba 12.527, de 18 de novembro de 2011")
+normas_citadas(texto)
 }

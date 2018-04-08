@@ -16,6 +16,6 @@ O nome da norma
 Nome da norma
 }
 \examples{
-# texto <- texto_norma(as_urn("urn:lex:br:federal:lei:2011-11-18;12527"))
-# nome_norma(texto)
+texto <- texto_norma(as_urn("urn:lex:br:federal:lei:2011-11-18;12527"))
+nome_norma(texto)
 }
