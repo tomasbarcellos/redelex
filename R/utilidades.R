@@ -74,13 +74,13 @@ print.urn <- function(x, ...) {
                       )
                 )
   cat(msg, '\n')
-  print(head(as.character(x), 10))
+  print(utils::head(as.character(x), 10))
 }
 
 #' @export
-summary.urn <- function(x, ...) {
-  tamanho <- length(x)
-  unicas <- length(unique(x))
+summary.urn <- function(object, ...) {
+  tamanho <- length(object)
+  unicas <- length(unique(object))
   msg <- c(tamanho, unicas)
   nomes <- c("Tamanho", "URNs \\u00fanicas")
   names(msg) <- stringi::stri_unescape_unicode(nomes)
