@@ -24,13 +24,15 @@ test_that('Regex funciona', {
 
 path_in01 <- system.file('extdata', 'in01.txt', package = 'redeleg')
 in01 <- readLines(path_in01, encoding = 'UTF-8', warn = FALSE)
-nome_in01 <- "instrução normativa conjunta mp/cgu nº 01, de 10 de maio de 2016"
+nome_in01 <- "instru\\u00e7\\u00e3o normativa conjunta mp/cgu n\\u00ba 01, de 10 de maio de 2016"
 
 test_that('Pega todas as normas citadas na IN 01 MP/CGU', {
   expect_equal(normas_citadas(in01),
-               c("decreto nº 8.578, de 26 de novembro de 2015",
-                 "decreto nº 8.109, de 17 de setembro de 2013"))
+               stringi::stri_unescape_unicode(
+                 c("decreto n\\u00ba 8.578, de 26 de novembro de 2015",
+                 "decreto n\\u00ba 8.109, de 17 de setembro de 2013"))
+               )
   # Nome da norma não aparece como norma citada
-  expect_false(nome_in01 %in% normas_citadas(in01))
+  expect_false(stringi::stri_unescape_unicode(nome_in01) %in% normas_citadas(in01))
 })
 
