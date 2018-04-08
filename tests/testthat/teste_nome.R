@@ -10,7 +10,7 @@ expect_nome <- function(nome) {
 }
 
 test_that("Retorna nome esperado da norma", {
-  expect_equal(nome_norma(in01), stringi::stri_unescape_unicode(nome_in01))
+  # expect_equal(nome_norma(in01), stringi::stri_unescape_unicode(nome_in01))
   expect_nome("Lei nº 12.527, de 18 de novembro de 2011")
   expect_nome("Lei nº 11.111, de 5 de maio de 2005")
 })
