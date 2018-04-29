@@ -88,6 +88,7 @@ print.urn <- function(x, ...) {
                 )
   cat(msg, '\n')
   print(utils::head(as.character(x), 10))
+  invisible(x)
 }
 
 #' @export
@@ -98,5 +99,6 @@ summary.urn <- function(object, ...) {
   nomes <- c("Tamanho", "URNs \\u00fanicas")
   names(msg) <- stringi::stri_unescape_unicode(nomes)
   print(msg)
+  invisible(msg)
 }
 
