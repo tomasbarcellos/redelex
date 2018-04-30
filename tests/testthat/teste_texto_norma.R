@@ -18,9 +18,9 @@ test_that("Lida com casos em que o link vai para site intermediario", {
 })
 
 test_that("Fonte diferentes do padrao", {
-  expect_failure(texto_norma(urn, "planalto"), "fonte")
-  expect_failure(texto_norma(urn, "camara"), "fonte")
-  expect_failure(texto_norma(urn, "Congresso"), "one of")
+  expect_error(texto_norma(urn, "planalto"), "fonte")
+  expect_error(texto_norma(urn, "camara"), "fonte")
+  expect_error(texto_norma(urn, "Congresso"), "one of")
 })
 
 test_that("metodos para urn funcionam", {
