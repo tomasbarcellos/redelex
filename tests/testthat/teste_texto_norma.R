@@ -13,11 +13,11 @@ test_that("texto_norma lida bem com métodos", {
 })
 
 test_that("Lida com casos em que o link vai para site intermediario", {
-  urn <- as_urn("urn:lex:br:federal:lei:1990-12-11;8112")
+  urn <<- as_urn("urn:lex:br:federal:lei:1990-12-11;8112")
   expect_true("Do Provimento" %in% texto_norma(urn))
 })
 
-test_that("Fonte diferentes do padrão", {
+test_that("Fonte diferentes do padrao", {
   expect_failure(texto_norma(urn, "planalto"), "fonte")
   expect_failure(texto_norma(urn, "camara"), "fonte")
   expect_failure(texto_norma(urn, "Congresso"), "one of")
