@@ -26,6 +26,6 @@ test_that("Fonte diferentes do padrao", {
 test_that("metodos para urn funcionam", {
   expect_output(print(urn), "<urn>")
   expect_equal(print(urn), urn)
-  expect_output(summary(urn), "Tamanho URNs \\wnicas")
+  expect_output(summary(urn), "Tamanho URNs")
   expect_equal(unname(summary(urn)), c(1, 1))
 })
