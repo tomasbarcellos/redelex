@@ -6,12 +6,12 @@ nome_in01 <-  "instru\\u00e7\\u00e3o normativa conjunta mp/cgu n\\u00ba 01, de 1
 
 expect_nome <- function(nome) {
   expect_equal(texto_norma(nome) %>% nome_norma(),
-               stringr::str_to_lower(nome))
+               stringi::stri_unescape_unicode(stringr::str_to_lower(nome)))
 }
 
 test_that("Retorna nome esperado da norma", {
   expect_equal(nome_norma(in01), stringi::stri_unescape_unicode(nome_in01))
-  expect_nome("Lei nº 12.527, de 18 de novembro de 2011")
-  expect_nome("Lei nº 11.111, de 5 de maio de 2005")
+  expect_nome("Lei n\\u00ba 12.527, de 18 de novembro de 2011")
+  expect_nome("Lei n\\u00ba 11.111, de 5 de maio de 2005")
 })
 

@@ -7,8 +7,10 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' texto <- texto_norma("Lei n\\u00ba 12.527, de 18 de novembro de 2011")
 #' normas_citadas(texto)
+#' }
 normas_citadas <- function(texto, contemnome = TRUE) {
   lista_de_tipos <- c("lei", "decreto", "resolu\\u00e7\\u00e3o",
                       "instru\\u00e7\\u00e3o normativa", 'portaria', 'ato',
@@ -53,8 +55,10 @@ normas_citadas <- function(texto, contemnome = TRUE) {
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' texto <- texto_norma(as_urn("urn:lex:br:federal:lei:2011-11-18;12527"))
 #' nome_norma(texto)
+#' }
 nome_norma <- function(texto){
   citadas <- texto %>%
 
